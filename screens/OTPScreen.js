@@ -150,7 +150,7 @@ const OTPScreen = () => {
   const isFocused = useIsFocused();
   const route = useRoute();
   const navigation = useNavigation();
-  const firstName = route?.params?.firstName || 'John Doe';
+  const firstName = route?.params?.firstName || 'Researcher';
 
   // Removed type annotation from the useRef declaration
   const itemsRef = useRef([]);

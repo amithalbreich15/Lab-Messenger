@@ -63,7 +63,7 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator initialRouteName="OTPScreen">
+      <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />

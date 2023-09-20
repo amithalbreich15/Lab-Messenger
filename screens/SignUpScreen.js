@@ -19,7 +19,8 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
+// import Feather from 'react-native-vector-icons/Feather';
+import { Feather, Lock, Mail, Phone, User } from "react-native-feather";
 import { LinearGradient } from 'expo-linear-gradient';
 
 
@@ -105,7 +106,7 @@ const SignUpScreen = () => {
       // });
   
       // await AsyncStorage.setItem('token', response.data.token);
-      navigation.navigate('SignInScreen'); // Navigate to SignInScreen on successful signup
+      navigation.navigate('SignInScreen', { profilePicture });
     // } catch (err) {
     //   setErrorMsg("User already exists, Please log in")
     //   setError(true)
@@ -117,7 +118,7 @@ const SignUpScreen = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#014576' barStyle="light-content" />
+      <StatusBar backgroundColor='#014576' barStyle="light-content"/>
       <View style={styles.header}>
       <Text style={styles.titleHeader}>Lab Messenger</Text>
         <Text style={styles.registerHeader}>Researcher's Registration</Text>
@@ -152,7 +153,7 @@ const SignUpScreen = () => {
           </TouchableOpacity>
           <Text style={styles.text_footer}>First Name</Text>
           <View style={styles.action}>
-            <FontAwesome
+            <User
               name="user-circle"
               color="#05375a"
               size={20}
@@ -169,7 +170,7 @@ const SignUpScreen = () => {
             marginTop: 35
           }]}>Last Name</Text>
           <View style={styles.action}>
-            <FontAwesome
+            <User
               name="user-circle"
               color="#05375a"
               size={20}
@@ -205,7 +206,7 @@ const SignUpScreen = () => {
             marginTop: 35
           }]}>E-Mail</Text>
           <View style={styles.action}>
-            <Feather
+            <Mail
               name="mail"
               color="#05375a"
               size={20}
@@ -222,7 +223,7 @@ const SignUpScreen = () => {
             marginTop: 35
           }]}>Mobile Phone</Text>
           <View style={styles.action}>
-            <Feather
+            <Phone
               name="mail"
               color="#05375a"
               size={20}
@@ -240,7 +241,7 @@ const SignUpScreen = () => {
             marginTop: 35
           }]}>Password</Text>
           <View style={styles.action}>
-            <Feather
+            <Lock
               name="lock"
               color="#05375a"
               size={20}
@@ -259,7 +260,7 @@ const SignUpScreen = () => {
             marginTop: 35
           }]}>Confirm Password</Text>
           <View style={styles.action}>
-            <Feather
+            <Lock
               name="lock"
               color="#014576"
               size={20}

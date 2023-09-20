@@ -278,15 +278,15 @@ const ResearcherPage2 = () => {
   const [selectedMessagesPerDay, setSelectedMessagesPerDay] = useState(null);
   const [isContinueEnabled, setIsContinueEnabled] = useState(false);
   const navigation = useNavigation();
-  const firstName = route?.params?.firstName || 'John Doe';
+  const firstName = route?.params?.firstName || 'Researcher';
 
 
-  useEffect(() => {
-    // Fetch the researcher's name from Firebase and set it in the state
-    fetchResearcherName().then((name) => {
-      setResearcherName(name);
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Fetch the researcher's name from Firebase and set it in the state
+  //   fetchResearcherName().then((name) => {
+  //     setResearcherName(name);
+  //   });
+  // }, []);
 
   const handleNextClick = () => {
     // Implement logic to navigate to the next step or page
@@ -333,13 +333,13 @@ const ResearcherPage2 = () => {
         {/* Lab Messenger Header */}
         <View style={styles.labMessengerHeader}>
           <Text style={styles.titleHeader}>Lab Messenger</Text>
+          <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
           {/* Profile Picture */}
           <Image
             source={require('../assets/images/user.png')} // Replace with the path to your image
             style={styles.profilePicture}
           />
           {/* "Hello, {firstName}" Text */}
-          <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
         </View>
       </LinearGradient>
       <View style={styles.content}>

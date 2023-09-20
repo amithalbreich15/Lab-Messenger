@@ -8,25 +8,27 @@ const ResearcherPage8A = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const selectedDays = route?.params?.selectedDays || ['Sunday', 'Monday', 'Thursday'];
-    const selectedMessages = route?.params?.selectedMessages || 10;
-    const selectedMessagesPerDay = route?.params?.selectedMessagesPerDay || 4;
-    const mobilePhoneNumber = route?.params?.mobilePhoneNumber || '123-456-7890';
-    const participantNumber = route?.params?.participantNumber || '987';
-    const firstName = route?.params?.firstName || 'John Doe';
+  const selectedMessages = route?.params?.selectedMessages || 10;
+  const selectedMessagesPerDay = route?.params?.selectedMessagesPerDay || 4;
+  const mobilePhoneNumber = route?.params?.mobilePhoneNumber || '123-456-7890';
+  const participantNumber = route?.params?.participantNumber || '987';
+  const firstName = route?.params?.firstName || 'Researcher';
 
 
   const handleConfirm = () => {
     // Handle confirmation logic here
+    navigation.navigate('EndScreen'); // Navigate to EndScreen
   };
 
   const handleReturn = () => {
-    navigation.goBack();
+    navigation.navigate('ResearcherPage6');
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.titleHeader}>Lab Messenger</Text>
+        <Text style={styles.frameHeader}>Hello, {firstName}!</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.frame}>
@@ -38,7 +40,6 @@ const ResearcherPage8A = () => {
               style={styles.profilePicture}
             />
           </View>
-          <Text style={styles.frameHeader}>Hello, {firstName}!</Text>
           <Text style={styles.frameHeader}>Terms and Conditions of Service</Text>
           <ScrollView style={styles.textScroll}>
             <Text style={styles.textContent}>

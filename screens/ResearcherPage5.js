@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute} from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { RadioButton as PaperRadioButton } from 'react-native-paper';
 import { initializeApp } from 'firebase/app';
@@ -27,6 +27,8 @@ const ResearcherPage5 = () => {
   const [researcherName, setResearcherName] = useState('');
   const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
   const navigation = useNavigation();
+  const route = useRoute();
+  const firstName = route?.params?.firstName || 'Researcher';
 
   useEffect(() => {
     // Fetch the researcher's name from Firebase and set it in the state
@@ -69,6 +71,7 @@ const ResearcherPage5 = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <Text style={styles.titleHeader}>Lab Messenger</Text>
+        <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
       </View>
       <LinearGradient colors={['#014576', '#014576']} style={styles.header}>
       <View style={styles.profilePictureContainer}>
@@ -90,7 +93,6 @@ const ResearcherPage5 = () => {
             </View>
             )}
         </View>
-        <Text style={styles.userTextHeader}>Hello, {researcherName}!</Text>
       </LinearGradient>
       <View style={styles.content}>
         <Text style={styles.headerText}>

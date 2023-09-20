@@ -1,30 +1,3 @@
-// // screens/ResearcherPage6.js
-// import React from 'react';
-// import { View, Text, StyleSheet } from 'react-native';
-
-// const ResearcherPage6 = () => {
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.text}>This is Researcher Page 6</Text>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   text: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//   },
-// });
-
-// export default ResearcherPage6;
-
-
 // import React, { useState, useEffect } from 'react';
 // import {
 //   View,
@@ -34,11 +7,13 @@
 //   ScrollView,
 //   Dimensions,
 //   Alert,
+//   Image,
 // } from 'react-native';
 // import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import { useNavigation, useRoute } from '@react-navigation/native';
 // import { LinearGradient } from 'expo-linear-gradient';
 // import moment from 'moment';
+// import * as Animatable from 'react-native-animatable';
 
 // const windowWidth = Dimensions.get('window').width;
 // const windowHeight = Dimensions.get('window').height;
@@ -46,49 +21,43 @@
 // const ResearcherPage6 = () => {
 //   const navigation = useNavigation();
 //   const route = useRoute();
-//   const selectedMessages = route.params?.selectedMessages || 5;
-//   const firstName = route.params?.firstName || 'Researcher';
+//   const selectedMessages = route.params?.selectedMessages || 1;
+//   const firstName = route.params?.firstName || 'John Doe';
+//   const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
 
-//   // Initialize messageTimes with an array of messages, each containing an array of times
 //   const [messageTimes, setMessageTimes] = useState(
-//     Array(6)
+//     Array(selectedMessages)
 //       .fill(0)
-//       .map(() => Array(2).fill(null)) // Assuming 2 time slots per message
+//       .map(() => Array(2).fill(null))
 //   );
 
-//   // Initialize visibility state for DateTimePickers
 //   const [isDatePickerVisible, setIsDatePickerVisible] = useState(
-//     Array(6)
+//     Array(selectedMessages)
 //       .fill(0)
-//       .map(() => Array(2).fill(false)) // Initialize with false for each time slot
+//       .map(() => Array(2).fill(false))
 //   );
 
 //   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 //   const [currentTimeSlotIndex, setCurrentTimeSlotIndex] = useState(0);
 
 //   useEffect(() => {
-//     // Initialize messageTimes with an array of messages, each containing an array of times
-//     const initialMessageTimes = Array(6)
+//     const initialMessageTimes = Array(selectedMessages)
 //       .fill(0)
-//       .map(() => Array(2).fill(null)); // Assuming 2 time slots per message
+//       .map(() => Array(2).fill(null));
 //     setMessageTimes(initialMessageTimes);
-//   }, [6]);
+//   }, [selectedMessages]);
 
 //   const showDatePicker = (messageIndex, timeSlotIndex) => {
 //     setCurrentMessageIndex(messageIndex);
 //     setCurrentTimeSlotIndex(timeSlotIndex);
 
-//     // Create a copy of the visibility state array
 //     const updatedVisibility = [...isDatePickerVisible];
-//     // Set the visibility for the specific message and time slot to true
 //     updatedVisibility[messageIndex][timeSlotIndex] = true;
 //     setIsDatePickerVisible(updatedVisibility);
 //   };
 
 //   const hideDatePicker = () => {
-//     // Create a copy of the visibility state array
 //     const updatedVisibility = [...isDatePickerVisible];
-//     // Set the visibility for the current message and time slot to false
 //     updatedVisibility[currentMessageIndex][currentTimeSlotIndex] = false;
 //     setIsDatePickerVisible(updatedVisibility);
 //   };
@@ -109,7 +78,7 @@
 //       return;
 //     }
 
-//     navigation.navigate('ResearcherPage8', { messageTimes });
+//     navigation.navigate('ResearcherPage8B', { messageTimes });
 //   };
 
 //   const handlePreviousClick = () => {
@@ -120,9 +89,32 @@
 
 //   return (
 //     <View style={styles.container}>
-//       <View style={styles.header}>
-//         <Text style={styles.titleHeader}>Lab Messenger</Text>
-//       </View>
+//       <LinearGradient colors={['#014576', '#014576']} style={styles.header}>
+//         <View style={styles.labMessengerTextHeader}>
+//           <Text style={styles.titleHeader}>Lab Messenger</Text>
+//           <View style={styles.profilePictureContainer}>
+//             {/* Profile Picture */}
+//             {profilePicture ? (
+//               <Animatable.Image
+//                 animation='fadeIn'
+//                 duration={1000}
+//                 source={{ uri: profilePicture }}
+//                 style={styles.profilePicture}
+//               />
+//             ) : (
+//               <View style={styles.profilePicturePlaceholder}>
+//                 <Animatable.Image
+//                   animation='fadeIn'
+//                   duration={1000}
+//                   source={require('../assets/images/user.png')}
+//                   style={styles.profilePicture}
+//                 />
+//               </View>
+//             )}
+//           </View>
+//           <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
+//         </View>
+//       </LinearGradient>
 //       <ScrollView contentContainerStyle={styles.content}>
 //         <Text style={styles.headerText}>{`Hello, ${firstName}!`}</Text>
 //         <Text style={styles.headerText}>Please set the messages according to the order of hours:</Text>
@@ -138,9 +130,18 @@
 //                     style={styles.radioButtonContainer}
 //                   >
 //                     <View style={styles.radioLabelContainer}>
-//                       <Text style={styles.radioLabel}>
-//                         {time ? moment(time, 'HH:mm').format('hh:mm A') : 'Select Time'}
-//                       </Text>
+//                       {time ? (
+//                         <Text style={styles.selectedTimeLabel}>
+//                           {moment(time, 'HH:mm').format('hh:mm A')}
+//                         </Text>
+//                       ) : (
+//                         <LinearGradient
+//                           colors={['#7fffd4', '#092f80']}
+//                           style={styles.selectTimeButton}
+//                         >
+//                           <Text style={styles.selectTimeButtonText}>Select Time</Text>
+//                         </LinearGradient>
+//                       )}
 //                     </View>
 //                   </TouchableOpacity>
 //                   {timeSlotIndex === 0 && (
@@ -162,25 +163,27 @@
 //         ))}
 //       </ScrollView>
 //       <View style={styles.bottomContainer}>
-//         <TouchableOpacity onPress={handlePreviousClick} style={styles.button}>
-//           <LinearGradient colors={['#69a7d0', '#092f80']} style={styles.labMessengerButtonGradient}>
-//             <Text style={styles.labMessengerButtonText}>Previous</Text>
-//           </LinearGradient>
-//         </TouchableOpacity>
+//   <TouchableOpacity onPress={handlePreviousClick} style={styles.button}>
+//     <LinearGradient colors={['#69a7d0', '#092f80']} style={styles.buttonGradient}>
+//       <Text style={styles.buttonText}>Previous</Text>
+//     </LinearGradient>
+//   </TouchableOpacity>
 
-//         <TouchableOpacity
-//           onPress={handleNextClick}
-//           style={[styles.button, isNextDisabled && { opacity: 0.5 }]}
-//           disabled={isNextDisabled}
-//         >
-//           <LinearGradient colors={['#7fffd4', '#092f80']} style={styles.labMessengerButtonGradient}>
-//             <Text style={styles.labMessengerButtonText}>Next</Text>
-//           </LinearGradient>
-//         </TouchableOpacity>
-//       </View>
+//   <TouchableOpacity
+//     onPress={handleNextClick}
+//     style={[styles.button, isNextDisabled && { opacity: 0.5 }]}
+//     disabled={isNextDisabled}
+//   >
+//     <LinearGradient colors={['#7fffd4', '#092f80']} style={styles.buttonGradient}>
+//       <Text style={styles.buttonText}>Next</Text>
+//     </LinearGradient>
+//   </TouchableOpacity>
+// </View>
 //     </View>
 //   );
 // };
+
+// export default ResearcherPage6;
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -203,9 +206,39 @@
 //   titleHeader: {
 //     fontWeight: 'bold',
 //     fontSize: 40,
-//     color: '#FDFDFD',
+//     color: '#fff',
 //     textAlign: 'center',
 //     marginBottom: 10,
+//     fontVariant: ['small-caps'],
+//   },
+//   labMessengerTextHeader: {
+//     alignItems: 'center', // Center-align the text and image horizontally
+//     marginBottom: 10,
+//   },
+//   profilePictureContainer: {
+//     marginTop: 10, // Add margin to separate the image from the text
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   profilePicture: {
+//     width: 100,
+//     height: 100,
+//     borderRadius: 50,
+//   },
+//   profilePicturePlaceholder: {
+//     width: 100,
+//     height: 100,
+//     borderRadius: 50,
+//     backgroundColor: '#e0e0e0',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   userTextHeader: {
+//     fontWeight: 'bold',
+//     fontSize: 24,
+//     color: '#fff',
+//     marginBottom: 10,
+//     textAlign: 'center',
 //     fontVariant: ['small-caps'],
 //   },
 //   headerText: {
@@ -221,58 +254,70 @@
 //     borderWidth: 2,
 //     borderRadius: 5,
 //     marginBottom: 10,
-//     backgroundColor: 'rgba(1, 69, 118, 0.1)', // Partial blue background
-//     paddingVertical: 10,
 //   },
 //   messageHeaderText: {
 //     fontWeight: 'bold',
 //     fontSize: 18,
 //     color: '#014576',
 //     textAlign: 'center',
+//     fontVariant: ['small-caps'],
 //   },
 //   timeSlotsContainer: {
 //     flexDirection: 'row',
-//     justifyContent: 'center',
+//     justifyContent: 'space-between',
+//     alignItems: 'center',
 //   },
 //   timeSlot: {
 //     flexDirection: 'row',
 //     alignItems: 'center',
 //   },
 //   andText: {
-//     color: '#014576', // White text
-//     marginHorizontal: 10,
+//     marginLeft: 5,
+//     marginRight: 5,
 //     fontSize: 18,
+//     color: '#014576',
 //     fontWeight: 'bold',
 //   },
-//   radioItem: {
-//     flexDirection: 'row',
+//   selectTimeButton: {
+//     borderRadius: 20,
 //     alignItems: 'center',
-//     padding: 10,
+//     justifyContent: 'center',
+//     padding: 5,
 //   },
-//   radioLabelContainer: {
-//     flex: 1,
-//     justifyContent: 'center', // Center-align the text vertically
-//     alignItems: 'center', // Center-align the text horizontally
-//   },
-//   radioLabel: {
-//     marginLeft: 10,
+//   selectTimeButtonText: {
+//     color: '#fff',
 //     fontSize: 16,
-//     color: '#014576',
-//     alignItems: 'center',
+//     fontWeight: 'bold',
+//     fontVariant: ['small-caps'],
 //   },
 //   radioButtonContainer: {
 //     alignItems: 'flex-start',
+//   },
+//   selectedTimeLabel: {
+//     marginLeft: 10,
+//     fontSize: 16,
+//     color: '#014576',
 //   },
 //   bottomContainer: {
 //     flexDirection: 'row',
 //     justifyContent: 'space-between',
 //     paddingHorizontal: 20,
-//     paddingVertical: 10,
+//     paddingVertical: 20, // Increase vertical padding for spacing
 //     backgroundColor: '#fff',
 //   },
 //   button: {
 //     flex: 1,
 //     marginHorizontal: 5,
+//   },
+//   buttonGradient: {
+//     borderRadius: 5,
+//     alignItems: 'center',
+//     paddingVertical: 10,
+//   },
+//   buttonText: {
+//     color: '#fff',
+//     fontSize: 16,
+//     fontWeight: 'bold',
 //   },
 //   labMessengerButtonGradient: {
 //     paddingVertical: 10,
@@ -285,9 +330,6 @@
 //   },
 // });
 
-// export default ResearcherPage6;
-
-
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -297,11 +339,13 @@ import {
   ScrollView,
   Dimensions,
   Alert,
+  Image,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import moment from 'moment';
+import * as Animatable from 'react-native-animatable';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -309,31 +353,29 @@ const windowHeight = Dimensions.get('window').height;
 const ResearcherPage6 = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const selectedMessages = route.params?.selectedMessages || 1;
+  const selectedMessages = route.params?.selectedMessages || 10;
   const firstName = route.params?.firstName || 'Researcher';
+  const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
 
-  // Initialize messageTimes with an array of messages, each containing an array of times
   const [messageTimes, setMessageTimes] = useState(
     Array(selectedMessages)
       .fill(0)
-      .map(() => Array(2).fill(null)) // Assuming 2 time slots per message
+      .map(() => Array(2).fill(null))
   );
 
-  // Initialize visibility state for DateTimePickers
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(
     Array(selectedMessages)
       .fill(0)
-      .map(() => Array(2).fill(false)) // Initialize with false for each time slot
+      .map(() => Array(2).fill(false))
   );
 
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [currentTimeSlotIndex, setCurrentTimeSlotIndex] = useState(0);
 
   useEffect(() => {
-    // Initialize messageTimes with an array of messages, each containing an array of times
     const initialMessageTimes = Array(selectedMessages)
       .fill(0)
-      .map(() => Array(2).fill(null)); // Assuming 2 time slots per message
+      .map(() => Array(2).fill(null));
     setMessageTimes(initialMessageTimes);
   }, [selectedMessages]);
 
@@ -341,17 +383,13 @@ const ResearcherPage6 = () => {
     setCurrentMessageIndex(messageIndex);
     setCurrentTimeSlotIndex(timeSlotIndex);
 
-    // Create a copy of the visibility state array
     const updatedVisibility = [...isDatePickerVisible];
-    // Set the visibility for the specific message and time slot to true
     updatedVisibility[messageIndex][timeSlotIndex] = true;
     setIsDatePickerVisible(updatedVisibility);
   };
 
   const hideDatePicker = () => {
-    // Create a copy of the visibility state array
     const updatedVisibility = [...isDatePickerVisible];
-    // Set the visibility for the current message and time slot to false
     updatedVisibility[currentMessageIndex][currentTimeSlotIndex] = false;
     setIsDatePickerVisible(updatedVisibility);
   };
@@ -383,11 +421,33 @@ const ResearcherPage6 = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.titleHeader}>Lab Messenger</Text>
-      </View>
+      <LinearGradient colors={['#014576', '#014576']} style={styles.header}>
+        <View style={styles.labMessengerTextHeader}>
+          <Text style={styles.titleHeader}>Lab Messenger</Text>
+          <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
+          <View style={styles.profilePictureContainer}>
+            {/* Profile Picture */}
+            {profilePicture ? (
+              <Animatable.Image
+                animation='fadeIn'
+                duration={1000}
+                source={{ uri: profilePicture }}
+                style={styles.profilePicture}
+              />
+            ) : (
+              <View style={styles.profilePicturePlaceholder}>
+                <Animatable.Image
+                  animation='fadeIn'
+                  duration={1000}
+                  source={require('../assets/images/user.png')}
+                  style={styles.profilePicture}
+                />
+              </View>
+            )}
+          </View>
+        </View>
+      </LinearGradient>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.headerText}>{`Hello, ${firstName}!`}</Text>
         <Text style={styles.headerText}>Please set the messages according to the order of hours:</Text>
 
         {messageTimes.map((times, messageIndex) => (
@@ -435,8 +495,8 @@ const ResearcherPage6 = () => {
       </ScrollView>
       <View style={styles.bottomContainer}>
         <TouchableOpacity onPress={handlePreviousClick} style={styles.button}>
-          <LinearGradient colors={['#69a7d0', '#092f80']} style={styles.labMessengerButtonGradient}>
-            <Text style={styles.labMessengerButtonText}>Previous</Text>
+          <LinearGradient colors={['#69a7d0', '#092f80']} style={styles.buttonGradient}>
+            <Text style={styles.buttonText}>Previous</Text>
           </LinearGradient>
         </TouchableOpacity>
 
@@ -445,14 +505,16 @@ const ResearcherPage6 = () => {
           style={[styles.button, isNextDisabled && { opacity: 0.5 }]}
           disabled={isNextDisabled}
         >
-          <LinearGradient colors={['#7fffd4', '#092f80']} style={styles.labMessengerButtonGradient}>
-            <Text style={styles.labMessengerButtonText}>Next</Text>
+          <LinearGradient colors={['#7fffd4', '#092f80']} style={styles.buttonGradient}>
+            <Text style={styles.buttonText}>Next</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+export default ResearcherPage6;
 
 const styles = StyleSheet.create({
   container: {
@@ -470,14 +532,44 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
-    paddingBottom: 60,
+    paddingBottom: 20, // Reduced vertical padding
   },
   titleHeader: {
     fontWeight: 'bold',
     fontSize: 40,
-    color: '#FDFDFD',
+    color: '#fff',
     textAlign: 'center',
     marginBottom: 10,
+    fontVariant: ['small-caps'],
+  },
+  labMessengerTextHeader: {
+    alignItems: 'center', // Center-align the text and image horizontally
+    marginBottom: 10,
+  },
+  profilePictureContainer: {
+    marginTop: 10, // Add margin to separate the image from the text
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  profilePicture: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  profilePicturePlaceholder: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#e0e0e0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  userTextHeader: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: '#fff',
+    marginBottom: 10,
+    textAlign: 'center',
     fontVariant: ['small-caps'],
   },
   headerText: {
@@ -561,19 +653,15 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 5,
   },
-  labMessengerButtonGradient: {
-    paddingVertical: 10,
+  buttonGradient: {
     borderRadius: 5,
     alignItems: 'center',
+    paddingVertical: 10,
   },
-  labMessengerButtonText: {
+  buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontVariant: ['small-caps'],
+    fontWeight: 'bold',
   },
 });
-
-export default ResearcherPage6;
-
-
 

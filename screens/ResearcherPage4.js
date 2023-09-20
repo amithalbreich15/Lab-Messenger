@@ -282,7 +282,7 @@ const ResearcherPage4 = () => {
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const navigation = useNavigation();
   const route = useRoute();
-  const firstName = route?.params?.firstName || 'John Doe';
+  const firstName = route?.params?.firstName || 'Researcher';
   const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
 
   useEffect(() => {
@@ -325,7 +325,8 @@ const ResearcherPage4 = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <LinearGradient colors={['#014576', '#014576']} style={styles.header}>
         <View style={styles.labMessengerTextHeader}>
-          <Text style={styles.titleHeader}>Hello, {researcherName}!</Text>
+          <Text style={styles.titleHeader}>Lab Messenger</Text>
+          <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
           <View style={styles.frame}>
             <View style={styles.profilePictureContainer}>
               {/* Profile Picture */}
@@ -348,7 +349,6 @@ const ResearcherPage4 = () => {
               )}
             </View>
           </View>
-          <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
         </View>
       </LinearGradient>
       <View style={styles.content}>
@@ -407,7 +407,7 @@ export default ResearcherPage4;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#014576',
+    backgroundColor: '#FDFDFD',
   },
   header: {
     paddingTop: 20,
@@ -457,6 +457,7 @@ const styles = StyleSheet.create({
     color: '#FDFDFD',
     textAlign: 'center',
     marginBottom: 10,
+    fontVariant: ['small-caps'],
   },
   frame: {
     alignItems: 'center',
@@ -484,6 +485,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginBottom: 10,
     textAlign: 'center',
+    fontVariant: ['small-caps'],
   },
   headerText: {
     fontWeight: 'bold',

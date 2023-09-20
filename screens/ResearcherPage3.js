@@ -40,15 +40,15 @@ const ResearcherPage3 = () => {
   const [researcherName, setResearcherName] = useState('');
   const navigation = useNavigation();
   const route = useRoute();
-  const firstName = route?.params?.firstName || 'John Doe';
+  const firstName = route?.params?.firstName || 'Researcher';
   const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
 
-  useEffect(() => {
-    // Fetch the researcher's name from Firebase and set it in the state
-    fetchResearcherName().then((name) => {
-      setResearcherName(name);
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Fetch the researcher's name from Firebase and set it in the state
+  //   fetchResearcherName().then((name) => {
+  //     setResearcherName(name);
+  //   });
+  // }, []);
 
   const handleNextClick = () => {
     if (selectedDays.length > 0) {
@@ -86,23 +86,23 @@ const ResearcherPage3 = () => {
     'Saturday',
   ];
 
-  const fetchResearcherName = async () => {
-    try {
-      // Reference to the Firebase Realtime Database
-      const databaseRef = ref(database);
+  // const fetchResearcherName = async () => {
+  //   try {
+  //     // Reference to the Firebase Realtime Database
+  //     const databaseRef = ref(database);
 
-      // Query the database to get the researcher's name
-      const snapshot = await get(child(databaseRef, 'researchers/researcher1/name'));
+  //     // Query the database to get the researcher's name
+  //     const snapshot = await get(child(databaseRef, 'researchers/researcher1/name'));
 
-      // Extract the researcher's name from the snapshot
-      const researcherName = snapshot.val();
+  //     // Extract the researcher's name from the snapshot
+  //     const researcherName = snapshot.val();
 
-      return researcherName;
-    } catch (error) {
-      console.error('Error fetching researcher name:', error);
-      return null;
-    }
-  };
+  //     return researcherName;
+  //   } catch (error) {
+  //     console.error('Error fetching researcher name:', error);
+  //     return null;
+  //   }
+  // };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -110,6 +110,7 @@ const ResearcherPage3 = () => {
         {/* Lab Messenger Header */}
         <View style={styles.labMessengerTextHeader}>
           <Text style={styles.titleHeader}>Lab Messenger</Text>
+          <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
           <View style={styles.frame}>
             <View style={styles.profilePictureContainer}>
             {profilePicture ? (
@@ -131,7 +132,6 @@ const ResearcherPage3 = () => {
             )}
             </View>
             </View>
-          <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
         </View>
       </LinearGradient>
       <View style={styles.content}>
@@ -151,7 +151,7 @@ const ResearcherPage3 = () => {
         </View>
 
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.prevButton} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={styles.prevButton} onPress={() => handlePreviousClick}>
             <LinearGradient
               colors={['#69a7d0', '#092f80']}
               style={styles.labMessengerButtonGradient}

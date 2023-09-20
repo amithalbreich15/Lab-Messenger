@@ -5,7 +5,7 @@
     import { LinearGradient } from 'expo-linear-gradient';
     import * as Animatable from 'react-native-animatable';
 
-    const ResearcherPage8B = () => {
+    const ResearcherPage8B = ({ messageTimes }) => {
     const navigation = useNavigation();
     const route = useRoute();
     const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
@@ -15,7 +15,7 @@
     const selectedMessagesPerDay = route?.params?.selectedMessagesPerDay || 4;
     const mobilePhoneNumber = route?.params?.mobilePhoneNumber || '123-456-7890';
     const participantNumber = route?.params?.participantNumber || '987';
-    const firstName = route?.params?.firstName || 'John Doe';
+    const firstName = route?.params?.firstName || 'Researcher';
 
     const handleConfirm = () => {
         // Handle confirmation logic here
@@ -30,6 +30,7 @@
         <View style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.titleHeader}>Lab Messenger</Text>
+            <Text style={styles.frameHeader}>Hello, {firstName}!</Text>
         </View>
         <ScrollView contentContainerStyle={styles.scrollContent}>
             <View style={styles.frame}>
@@ -52,7 +53,6 @@
             </View>
             )}
         </View>
-            <Text style={styles.frameHeader}>Hello, {firstName}!</Text>
             <Text style={styles.frameHeader}>Terms and Conditions of Service</Text>
             <ScrollView style={styles.textScroll}>
                 <Text style={styles.textContent}>

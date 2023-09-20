@@ -1,30 +1,4 @@
-// // screens/ResearcherPage7.js
-// import React from 'react';
-// import { View, Text, StyleSheet } from 'react-native';
-
-// const ResearcherPage7 = () => {
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.text}>This is Researcher Page 7</Text>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   text: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//   },
-// });
-
-// export default ResearcherPage7;
-
-
+// import ResearcherPage2 from '../screens/ResearcherPage2.js';
 // import React, { useState, useEffect } from 'react';
 // import {
 //   View,
@@ -46,16 +20,16 @@
 // const ResearcherPage7 = () => {
 //   const navigation = useNavigation();
 //   const route = useRoute();
-//   const selectedMessages = route.params?.selectedMessages || 0;
+//   const selectedMessages = route.params?.ResearcherPage2.selectedMessages || 2;
 //   const firstName = route.params?.firstName || 'Researcher';
 //   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 //   const [messageTimes, setMessageTimes] = useState([]);
 //   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 
 //   useEffect(() => {
-//     const initialMessageTimes = Array(10).fill(null); // Fix the Messages number to change accordingly
+//     const initialMessageTimes = Array(selectedMessages).fill(null); // Fix the Messages number to change accordingly
 //     setMessageTimes(initialMessageTimes);
-//   }, [10]);
+//   }, [selectedMessages]);
 
 //   const showDatePicker = (index) => {
 //     setDatePickerVisibility(true);
@@ -82,7 +56,21 @@
 //       return;
 //     }
 
-//     navigation.navigate('ResearcherPage8', { messageTimes });
+//     // Check if message times are in ascending order
+//     for (let i = 1; i < messageTimes.length; i++) {
+//       if (
+//         messageTimes[i] &&
+//         moment(messageTimes[i], 'HH:mm').isBefore(moment(messageTimes[i - 1], 'HH:mm'))
+//       ) {
+//         Alert.alert(
+//           'Error',
+//           'Message Times should be chronological in ascending order. Please select a later time.'
+//         );
+//         return;
+//       }
+//     }
+
+//     navigation.navigate('ResearcherPage8A', { messageTimes });
 //   };
 
 //   const handlePreviousClick = () => {
@@ -174,9 +162,9 @@
 //   titleHeader: {
 //     fontWeight: 'bold',
 //     fontSize: 40,
-//     color: '#FDFDFD',
+//     color: '#FFFFFF',
 //     textAlign: 'center',
-//     marginBottom: 10,
+//     marginTop: 20,
 //     fontVariant: ['small-caps'],
 //   },
 //   headerText: {
@@ -266,7 +254,6 @@
 
 // export default ResearcherPage7;
 
-import ResearcherPage2 from '../screens/ResearcherPage2.js';
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -275,12 +262,14 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
+  Image,
   Alert,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import moment from 'moment';
+import * as Animatable from 'react-native-animatable';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -293,6 +282,7 @@ const ResearcherPage7 = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [messageTimes, setMessageTimes] = useState([]);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
 
   useEffect(() => {
     const initialMessageTimes = Array(selectedMessages).fill(null); // Fix the Messages number to change accordingly
@@ -349,11 +339,32 @@ const ResearcherPage7 = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.titleHeader}>Lab Messenger</Text>
-      </View>
+      <LinearGradient colors={['#014576', '#014576']} style={styles.header}>
+        <View style={styles.labMessengerTextHeader}>
+          <Text style={styles.titleHeader}>Lab Messenger</Text>
+          <Text style={styles.userTextHeader}>Hello, {firstName}!</Text>
+          <View style={styles.profilePictureContainer}>
+            {profilePicture ? (
+              <Animatable.Image
+                animation='fadeIn'
+                duration={1000}
+                source={{ uri: profilePicture }}
+                style={styles.profilePicture}
+              />
+            ) : (
+              <View style={styles.profilePicturePlaceholder}>
+                <Animatable.Image
+                  animation='fadeIn'
+                  duration={1000}
+                  source={require('../assets/images/user.png')}
+                  style={styles.profilePicture}
+                />
+              </View>
+            )}
+          </View>
+        </View>
+      </LinearGradient>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.headerText}>Hello, {firstName}!</Text>
         <Text style={styles.headerText}>Please set the messages according to the order of hours:</Text>
 
         {messageTimes.map((time, index) => (
@@ -362,7 +373,8 @@ const ResearcherPage7 = () => {
               <Text style={styles.messageHeaderText}>{`Message ${index + 1}`}</Text>
             </View>
             <View style={styles.radioItem}>
-              <TouchableOpacity onPress={() => showDatePicker(index)} style={styles.radioButtonContainer}>
+                <View>
+                <TouchableOpacity onPress={() => showDatePicker(index)} style={styles.radioButtonContainer}>
                 <View style={styles.radioLabelContainer}>
                   {time ? (
                     <Text style={styles.selectedTimeLabel}>
@@ -378,6 +390,7 @@ const ResearcherPage7 = () => {
                   )}
                 </View>
               </TouchableOpacity>
+                </View>
               <DateTimePickerModal
                 isVisible={isDatePickerVisible && currentMessageIndex === index}
                 mode="time"
@@ -427,13 +440,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 60, // Increased paddingBottom for white space at the bottom
   },
-  titleHeader: {
+  labMessengerTextHeader: {
+    color: '#fff',
     fontWeight: 'bold',
-    fontSize: 40,
-    color: '#FFFFFF',
+    fontSize: 24,
     textAlign: 'center',
-    marginTop: 20,
-    fontVariant: ['small-caps'],
+    marginBottom: 20,
   },
   headerText: {
     fontWeight: 'bold',
@@ -448,6 +460,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     marginBottom: 10,
+  },
+  titleHeader: {
+    fontWeight: 'bold',
+    fontSize: 40,
+    color: '#FFFFFF',
+    textAlign: 'center',
+    marginTop: 20,
+    fontVariant: ['small-caps'],
   },
   messageHeader: {
     backgroundColor: '#014576',
@@ -465,16 +485,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
-  radioLabelContainer: {
-    flex: 1,
-    justifyContent: 'center', // Center-align the text vertically
-    alignItems: 'center', // Center-align the text horizontally
+  radioButtonContainer: {
+    alignItems: 'flex-start',
   },
-  radioLabel: {
-    marginLeft: 10,
-    fontSize: 16,
-    color: '#014576',
+  selectMessageContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  selectTimeButtonContainer: {
+    flex: 1,
+    borderRadius: 20, // Make it round
+    alignItems: 'center', // Center-align content
+    justifyContent: 'center', // Center-align content
+    padding: 5, // Padding for the button
   },
   selectedTimeLabel: {
     marginLeft: 10,
@@ -483,20 +508,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectTimeButton: {
-    flex: 1,
     borderRadius: 20, // Make it round
     alignItems: 'center', // Center-align content
     justifyContent: 'center', // Center-align content
-    padding: 5, // Padding for the button
+    padding: 10, // Padding for the button
+    backgroundColor: '#7fffd4', // Button background color
   },
   selectTimeButtonText: {
     color: '#fff', // Text color
     fontSize: 16, // Text size
     fontWeight: 'bold', // Bold text
     fontVariant: ['small-caps'],
-  },
-  radioButtonContainer: {
-    alignItems: 'flex-start',
   },
   bottomContainer: {
     flexDirection: 'row',
@@ -518,7 +540,41 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
+  profilePictureContainer: {
+    alignItems: 'center', // Align profile picture in the center
+  },
+  profilePicture: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  profilePicturePlaceholder: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#e0e0e0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  userTextHeader: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: '#FFFFFF',
+    marginBottom: 10,
+    textAlign: 'center',
+    fontVariant: ['small-caps'],
+  },
+  radioLabelContainer: {
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center"
+  },
+  selectButtonContiner: {
+    justifyContent: "center",
+    alignContent: "center"
+  }
 });
 
 export default ResearcherPage7;
+
 
