@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../OneDrive/שולחן העבודה/react_native_jobs/jobsift-starter/constants"
+		},
+		{
+			"path": "../../OneDrive/שולחן העבודה/react_native_jobs/jobsift-starter/styles"
+		},
+		{
+			"path": "../../OneDrive/שולחן העבודה/react_native_jobs/jobsift-starter/assets"
+		},
+		{
+			"path": "../../OneDrive/שולחן העבודה/react_native_jobs/jobsift-starter/components"
+		}
+	],
+	"settings": {}
+}

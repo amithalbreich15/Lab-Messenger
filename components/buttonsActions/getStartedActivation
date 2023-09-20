@@ -1,0 +1,14 @@
+import { View, Button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+export default function goToSignUp() {
+    const navigation = useNavigation();
+    return (
+        <View>
+            <Button
+                title="Go to SignUpScreen"
+                onPress={() => navigation.navigate('SignUpScreen')}
+            />
+        </View>
+    );
+};
