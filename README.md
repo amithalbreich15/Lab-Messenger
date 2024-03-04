@@ -1,14 +1,5 @@
-# Expo Router Example
 
-Use [`expo-router`](https://expo.github.io/router) to build native navigation using files in the `app/` directory.
+Splash Screen:
 
-## 🚀 How to use
+![Splash Screen](https://github.com/amithalbreich15/Lab-Messenger/assets/118397588/7bba6f46-fd3d-494c-9d1d-1b2c7607df38)
 
-```sh
-npx create-expo-app -e with-router
-```
-
-## 📝 Notes
-
-- [Expo Router: Docs](https://expo.github.io/router)
-- [Expo Router: Repo](https://github.com/expo/router)
