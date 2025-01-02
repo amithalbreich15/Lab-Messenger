@@ -5,16 +5,23 @@ Lab Messenger is a web application designed to facilitate communication between 
 Features:
 Multi-Channel Messaging:
 Choose between SMS, WhatsApp, or push notifications to reach participants.
+
 Participant Management:
 Add, edit, and organize participant details in a structured database.
+
 Automated and Manual Messaging:
 Schedule messages in advance or send them on-demand.
+
 Data Security:
 Ensure participant data is securely stored and handled in compliance with data protection standards.
+
 Simple User Interface:
 Focused on functionality over design to save development time, but flexible for future enhancements.
 
 This app is suitable for research labs that need reliable, clear communication with participants during studies. It provides an essential tool for improving participant engagement and ensuring the success of research projects.
+
+App Workflow:
+
 Intro Screen:
 
 ![Splash Screen](https://github.com/amithalbreich15/Lab-Messenger/assets/118397588/7bba6f46-fd3d-494c-9d1d-1b2c7607df38)
